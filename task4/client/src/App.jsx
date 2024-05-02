@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-function App() {
+function App() { 
     const [value, setValue] = useState({
         'firstname': '',
         'lastname': '',

@@ -1,7 +1,7 @@
 import React from 'react';
 import "./UserDetails.css"; // Assuming you have a UserDetails.css file for custom styling
 
-const UserDetails = () => {
+const UserDetails = () => { 
   
   return (
     <div className="container-fluid vh-100 d-flex flex-column justify-content-center align-items-center bg-dark ">

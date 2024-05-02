@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import {  useNavigate } from 'react-router-dom';
 
-function CreateUser() {
+function CreateUser() { 
     const Navigate=useNavigate();
     const [value, setValue] = useState({
         'firstname': '',
