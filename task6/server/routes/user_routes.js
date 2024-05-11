@@ -30,7 +30,9 @@ router.route('/').post(async (req, res) => {
       res.cookie("Token", jwtToken, {
         httpOnly: true,
         withCredentials: true,
+
       })
+       console.log("Cookie sent");
       return res.send('Data received!');
     } else {
       return res.status(400).send("Password does not match");
@@ -72,14 +74,21 @@ router.route('/login').post(async (req, res) => {
   }
 });
 // user profile details
-router.route('/userdetails').post(auth,async (req, res) => {
-  const { name, email, zip, address, phone, state, city } = req.body
+router.route('/userdetails').get(auth,async (req, res) =>{
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    console.log(error)
+  }
+})
+router.route('/userdetails').post(async (req, res) => {
+  const { name, username, zip, address, phone, state, city } = req.body
   console.log(req.body)
 
   try {
     const userDetail = new userDetailsModel({
       name: name,
-      email: email,
+      username: username,
       address: address,
       phone: phone,
       zip: zip,
@@ -87,13 +96,23 @@ router.route('/userdetails').post(auth,async (req, res) => {
       state: state
     })
     await userDetail.save()
-    return res.status(200).send("User Details Added")
+    return res.status(200).send("Details added successfully")
 
   } catch (error) {
     console.log(error)
     return res.status(500).send("Error In Updating User Details")
   }
 
+})
+
+
+// profile
+router.route('/userprofile').get(auth,async (req, res) =>{
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 module.exports = router;

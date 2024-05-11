@@ -1,8 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from "axios"
 import "./UserDetails.css"; // Assuming you have a UserDetails.css file for custom styling
 
 const UserDetails = () => {
-  
+  const [value, setValue] = React.useState({
+    "name": '',
+    'username': '',
+    'img': '',
+    'address': '',
+    'city': '',
+    'state': '',
+    'zip': '',
+    'phone': ''
+  });
+
+  const fetch = async () => {
+    try {
+      const res = await axios.get('http://localhost:3000/userprofile', {
+        withCredentials: true,
+      })
+      console.log("response", res)
+      setValue({
+       name: res.data.name,
+       username:  res.data.username,
+       img: res.data.img,
+       address: `${res.data.street}, ${res.data.city}`,
+       city: res.data.city,
+       state: res.data.state,
+       zip: res.data.postal_code,
+       phone: res.data.phone
+      })
+
+    } catch (error) {
+      alert("please login first")
+
+      console.log("error", error)
+      Navigate('/login')
+
+    }
+
+  }
+  useEffect(() => {
+    fetch();
+  }, [])
+
   return (
     <div className="container-fluid vh-100 d-flex flex-column justify-content-center align-items-center bg-dark ">
       <div className="row w-100 w-md-75 w-lg-50 p-4 p-md-5">
@@ -19,7 +60,7 @@ const UserDetails = () => {
         </div>
         <div className="col-md-5 border border-2 right">
           <p className="mb-3 pb-3 border-bottom border-3"><strong>Name:</strong> Supriyo</p>
-          <p className="mb-3 pb-3 border-bottom border-3"><strong>Email:</strong> user@example.com</p>
+          <p className="mb-3 pb-3 border-bottom border-3"><strong>UserName:</strong> user@example.com</p>
           <p className="mb-3 pb-3 border-bottom border-3"><strong>Phone:</strong> +123 456 7890</p>
           <p className="mb-3 pb-3 border-bottom border-3"><strong>Address:</strong> 123 Street, City</p>
           <p className="mb-3 pb-3 border-bottom border-3"><strong>City:</strong> City</p>

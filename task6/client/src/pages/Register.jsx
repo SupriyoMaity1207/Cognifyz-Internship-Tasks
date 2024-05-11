@@ -29,17 +29,20 @@ function Register() {
                 alert("Password does not match.")
             } else {
                try {
-                const response = await axios.post('http://localhost:3000/', user,{
-                    credentials: true
-                });
+                const response = await axios.post("http://localhost:3000/", {
+                    ...user,
+                  }, {
+                    withCredentials: true,
+                  })
                 console.log(response.data);
+                console.log(response.headers);
                 if(response.status){
                     alert(response.data);
                     Navigate("/userdetails",)
                 }
                 
                } catch (error) {
-                  alert(error.response.data)
+                //   alert(error.response.data)
                     console.log(error)
                }
             }

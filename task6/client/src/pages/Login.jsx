@@ -11,15 +11,15 @@ function Login() {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:3000/login", user, {
-                credentials: true
+                withCredentials: true,
             });
             console.log(response.data);
             if(response.status){
-                alert(response.data);
-                Navigate("/userdetails",)
+                // alert(response.data);
+                Navigate("/userprofile",)
             }
         } catch (error) {
-            alert(error.response.data)
+            // alert(error.response.data)
             console.log(error)
 
         }

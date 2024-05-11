@@ -7,7 +7,7 @@ function CreateUser() {
     const Navigate = useNavigate();
     const [value, setValue] = useState({
         "name": '',
-        'email': '',
+        'username': '',
         'img': '',
         'address': '',
         'city': '',
@@ -16,13 +16,20 @@ function CreateUser() {
     })
     const fetchdata=async()=>{
         try {
-            const res=await axios.get('https://localhost:3000/userdetails',{
-                credentials: true
+            const res=await axios.get('http://localhost:3000/userdetails',{
+                withCredentials: true,
             })
             console.log("response",res)
+            setValue({
+                email:res.data.email,
+                name:res.data.name,
+            })
             
         } catch (error) {
-            console.log(error)
+            alert("please login first")
+            
+            console.log("error",error)
+            Navigate( '/login')
             
         }
 
@@ -38,7 +45,7 @@ function CreateUser() {
         }
         try {
             const response=await axios.post('http://localhost:3000/userdetails',value,{
-                credentials: true
+                withCredentials: true,
             })
             console.log(response.data);
             if(response.status){
@@ -46,13 +53,13 @@ function CreateUser() {
                 Navigate("/userprofile",)
             }
         }catch(error){
-            alert(error.response.data)
+            // alert(error.response.data)
             console.log(error)
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         fetchdata();
-    },[])
+    }, []);
 
     return (
         <div className='container d-flex justify-content-center align-centre'>
@@ -62,13 +69,13 @@ function CreateUser() {
                     <div className="row mb-1">
                         <div className="form-group mb-2">
                             <label htmlFor="exampleInputName1">Name</label>
-                            <input type="text" className="form-control" id="name" placeholder="Entre Name" name='name' required onChange={handleChange} />
+                            <input type="text" className="form-control" id="name" placeholder="Entre Name" name='name' required onChange={handleChange} value={value.name}/>
                         </div>
                     </div>
                     <div className="row mb-1">
                         <div className="form-group col-md-6">
-                            <label htmlFor="inputEmail4">Email</label>
-                            <input type="email" className="form-control" id="inputEmail4" placeholder="Email" name="email" onChange={handleChange} required />
+                            <label htmlFor="username">UserName</label>
+                            <input type="text" className="form-control" id="username" placeholder="username" name="username" onChange={handleChange} required  />
                         </div>
                         <div className="form-group col-md-6">
                             <label htmlFor="img">Profile Image</label>
